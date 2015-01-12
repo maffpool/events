@@ -2,7 +2,7 @@
 
 namespace Evaneos\Events;
 
-class EventSerializer
+class EventSerializer implements Serializer
 {
 
     private $serializationMap = array();

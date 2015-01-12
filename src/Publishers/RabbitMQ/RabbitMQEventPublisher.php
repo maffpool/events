@@ -3,10 +3,10 @@ namespace Evaneos\Events\Publishers\RabbitMQ;
 
 use Evaneos\Events\EventPublisher;
 use Evaneos\Events\Event;
-use Evaneos\Events\EventSerializer;
 use PhpAmqpLib\Channel\AMQPChannel;
 use PhpAmqpLib\Message\AMQPMessage;
 use Rhumsaa\Uuid\Uuid;
+use Evaneos\Events\Serializer;
 
 class RabbitMQEventPublisher implements EventPublisher
 {
@@ -19,17 +19,17 @@ class RabbitMQEventPublisher implements EventPublisher
 
     /**
      *
-     * @var \Evaneos\Events\EventSerializer
+     * @var \Evaneos\Events\Serializer
      */
     private $serializer;
 
     /**
      *
      * @param \PhpAmqpLib\Channel\AMQPChannel $channel
-     * @param strng $exchange
-     * @param \Evaneos\Events\EventSerializer $serializer
+     * @param string $exchange
+     * @param \Evaneos\Events\Serializer $serializer
      */
-    public function __construct(AMQPChannel $channel, $exchange, EventSerializer $serializer)
+    public function __construct(AMQPChannel $channel, $exchange, Serializer $serializer)
     {
         $this->channel = $channel;
         $this->exchange = $exchange;
