@@ -6,8 +6,9 @@ use Burrow\Worker;
 use Burrow\QueueService;
 use Evaneos\Events\EventDispatcher;
 use Evaneos\Events\Serializer;
+use Evaneos;
 
-class EchoWorker extends AbstractWorker implements Worker
+class MessageQueueWorker extends AbstractWorker implements Worker
 {
     /**
      * @var EventDispatcher
@@ -30,7 +31,7 @@ class EchoWorker extends AbstractWorker implements Worker
     public function __construct(QueueService $queueService, EventDispatcher $eventDispatcher, Serializer $serializer)
     {
         $this->eventDispatcher = $eventDispatcher;
-        $this->serialize = $serializer;
+        $this->serializer = $serializer;
         parent::__construct($queueService);
     }
     
@@ -61,8 +62,10 @@ class EchoWorker extends AbstractWorker implements Worker
         $self = $this;
         
         $this->queueService->registerConsumer(function($messageBody) use ($self) {
-            $event = $self->serializer->deserialize($messageBody);
-            $self->getEventDispatcher()->dispatch($event);
+            $event = $self->getSerializer()->deserialize($messageBody);
+            if ($event !== null && $event instanceof Evaneos\Events\Event) {
+                $self->getEventDispatcher()->dispatch($event);
+            }
         });
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Evaneos\Events;
 
+use Evaneos;
 class EventSerializer implements Serializer
 {
 
@@ -21,8 +22,12 @@ class EventSerializer implements Serializer
         return $this->serializationMap[$category];
     }
 
-    public function serialize(Event $object)
+    public function serialize($object)
     {
+        if (!($object instanceof Evaneos\Events\Event)) {
+            throw new \BadMethodCallException('You can only serialize events!');
+        }
+        
         $serializer = $this->getSerializer($object->getCategory());
 
         return $serializer->serialize($object);
@@ -32,8 +37,11 @@ class EventSerializer implements Serializer
     {
         $deserialized = json_decode($serializedObject);
 
-        $serializer = $this->getSerializer($deserialized->category);
-
-        return $serializer->deserialize($serializedObject);
+        if (isset($deserialized->category)) {
+            $serializer = $this->getSerializer($deserialized->category);
+            return $serializer->deserialize($serializedObject);
+        }
+        
+        return null;
     }
 }
