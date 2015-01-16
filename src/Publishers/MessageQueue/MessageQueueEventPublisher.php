@@ -22,7 +22,7 @@ class MessageQueueEventPublisher implements EventPublisher
     /**
      * Constructor
      * 
-     * @param QueuePublisher $queueService
+     * @param QueuePublisher $queuePublisher
      */
     public function __construct(QueuePublisher $queuePublisher, Serializer $serializer)
     {
