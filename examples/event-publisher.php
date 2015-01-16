@@ -8,13 +8,19 @@ if (!isset($argv[1])) {
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-$queueService = new \Burrow\RabbitMQ\AmqpExchangeService('127.0.0.1', 5672, 'guest', 'guest', 'xchange');
-$queueService->addQueue('app1');
+$exchangeName = 'xchange';
+$queueName = 'app1';
+
+$admin = new \Burrow\RabbitMQ\AmqpAdministrator('127.0.0.1', 5672, 'guest', 'guest');
+$admin->declareExchange($exchangeName);
+$admin->declareAndBindQueue($exchangeName, $queueName);
+
+$publisher = new \Burrow\RabbitMQ\AmqpAsyncPublisher('127.0.0.1', 5672, 'guest', 'guest', $exchangeName);
 
 $serializer = new \Evaneos\Events\EventSerializer();
 $serializer->bindSerializer('test.simple', new \Evaneos\Events\Example\TestEventSerializer());
 
-$eventPublisher = new \Evaneos\Events\Publishers\MessageQueue\MessageQueueEventPublisher($queueService, $serializer);
+$eventPublisher = new \Evaneos\Events\Publishers\MessageQueue\MessageQueueEventPublisher($publisher, $serializer);
 
 for ($i = 0; $i < $argv[1]; ++$i) {
     $eventPublisher->publish(new \Evaneos\Events\Example\TestEvent($i));

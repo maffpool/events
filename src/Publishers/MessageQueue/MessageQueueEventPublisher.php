@@ -1,18 +1,18 @@
 <?php
 namespace Evaneos\Events\Publishers\MessageQueue;
 
-use Burrow\QueueService;
 use Evaneos\Events\EventPublisher;
 use Evaneos\Events\Event;
 use Evaneos\Events\Serializer;
+use Burrow\QueuePublisher;
 
 class MessageQueueEventPublisher implements EventPublisher
 {
 
     /**
-     * @var QueueService
+     * @var QueuePublisher
      */
-    private $queueService;
+    private $queuePublisher;
     
     /**
      * @var Serializer
@@ -22,11 +22,11 @@ class MessageQueueEventPublisher implements EventPublisher
     /**
      * Constructor
      * 
-     * @param QueueService $queueService
+     * @param QueuePublisher $queueService
      */
-    public function __construct(QueueService $queueService, Serializer $serializer)
+    public function __construct(QueuePublisher $queuePublisher, Serializer $serializer)
     {
-        $this->queueService = $queueService;
+        $this->queuePublisher = $queuePublisher;
         $this->serializer = $serializer;
     }
 
@@ -36,6 +36,6 @@ class MessageQueueEventPublisher implements EventPublisher
     public function publish(Event $event)
     {
         $serializedEvent = $this->serializer->serialize($event);
-        $this->queueService->publish($serializedEvent);
+        $this->queuePublisher->publish($serializedEvent);
     }
 }
