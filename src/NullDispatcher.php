@@ -22,5 +22,7 @@ class NullDispatcher implements EventDispatcher
         if ($this->verbose) {
             echo 'Got an event : ' . $event->getCategory() . ', yeah !', PHP_EOL;
         }
+        
+        return 1;
     }
 }

@@ -39,7 +39,11 @@ class MessageQueueConsumer implements QueueConsumer
     {
         $event = $this->serializer->deserialize($message);
         if ($event !== null && $event instanceof Evaneos\Events\Event) {
-            $this->eventDispatcher->dispatch($event);
+            $listened = $this->eventDispatcher->dispatch($event);
+            
+            if ($listened < 1) {
+                throw new \DomainException('At least one listener must listen the event!');
+            }
         }
     }
 }
