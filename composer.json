@@ -15,7 +15,7 @@
 	"repositories": [
         {
             "type": "vcs",
-            "url": "git@github.com:remievaneos/Burrow.git"
+            "url": "git@github.com:Evaneos/Burrow.git"
         }
     ],
 	"require-dev" : {
@@ -23,7 +23,7 @@
 		"league/phpunit-coverage-listener" : "~1.0",
 		"videlalvaro/php-amqplib" : "~2",
 		"predis/predis" : "~0.8",
-		"evaneos/burrow" : "dev-master"
+		"evaneos/burrow" : "~1.0.0"
 	},
 	"suggest" : {
 		"videlalvaro/php-amqplib" : "Allows usage of the RabbitMQ event publisher.",
