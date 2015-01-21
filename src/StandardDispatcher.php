@@ -17,6 +17,7 @@ class StandardDispatcher implements EventDispatcher
 
     public function dispatch(Event $event)
     {
+        $listened = 0;
         $category = $event->getCategory();
 
         foreach ($this->subscriptions as $subscription) {
@@ -24,7 +25,10 @@ class StandardDispatcher implements EventDispatcher
 
             if ($hasMatch && $subscription->getSubscriber()->supports($event)) {
                 $subscription->getSubscriber()->handle($event);
+                $listened++;
             }
         }
+        
+        return $listened;
     }
 }

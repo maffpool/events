@@ -8,19 +8,28 @@
 	},
 	"autoload" : {
 		"psr-4" : {
-			"Evaneos\\Events\\" : "src"
+			"Evaneos\\Events\\" : "src",
+			"Evaneos\\Events\\Example\\" : "examples/src"
 		}
 	},
+	"repositories": [
+        {
+            "type": "vcs",
+            "url": "git@github.com:remievaneos/Burrow.git"
+        }
+    ],
 	"require-dev" : {
 		"squizlabs/php_codesniffer" : "~1.5",
 		"league/phpunit-coverage-listener" : "~1.0",
 		"videlalvaro/php-amqplib" : "~2",
-		"predis/predis" : "~0.8"
+		"predis/predis" : "~0.8",
+		"evaneos/burrow" : "dev-master"
 	},
 	"suggest" : {
 		"videlalvaro/php-amqplib" : "Allows usage of the RabbitMQ event publisher.",
 		"predis/predis" : "Allows usage of the Redis event publisher.",
 		"ext-mysql" : "Allows usage of the PDO event publisher with MySQL",
-		"ext-pgsql" : "Allows usage of the PDO event publisher with PostgreSQL"
+		"ext-pgsql" : "Allows usage of the PDO event publisher with PostgreSQL",
+		"evaneos/burrow" : "Allows usage of the RabbitMQ event publisher."
 	}
 }
