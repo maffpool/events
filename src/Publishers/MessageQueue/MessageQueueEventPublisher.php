@@ -36,6 +36,6 @@ class MessageQueueEventPublisher implements EventPublisher
     public function publish(Event $event)
     {
         $serializedEvent = $this->serializer->serialize($event);
-        $this->queuePublisher->publish($serializedEvent);
+        $this->queuePublisher->publish($serializedEvent, $event->getCategory());
     }
 }
