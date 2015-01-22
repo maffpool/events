@@ -30,7 +30,11 @@ class EventSerializer implements Serializer
         
         $serializer = $this->getSerializer($object->getCategory());
 
-        return $serializer->serialize($object);
+        $serialized = new \stdClass();
+        $serialized->category = $object->getCategory();
+        $serialized->object = $serializer->serialize($object);
+        
+        return json_encode($serialized);
     }
 
     public function deserialize($serializedObject)
@@ -39,7 +43,7 @@ class EventSerializer implements Serializer
 
         if (isset($deserialized->category)) {
             $serializer = $this->getSerializer($deserialized->category);
-            return $serializer->deserialize($serializedObject);
+            return $serializer->deserialize($deserialized->object);
         }
         
         return null;

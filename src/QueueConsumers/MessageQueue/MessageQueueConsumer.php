@@ -44,6 +44,8 @@ class MessageQueueConsumer implements QueueConsumer
             if ($listened < 1) {
                 throw new \DomainException('At least one listener must listen the event!');
             }
+        } else {
+            throw new \IllegalArgumentException('Can\'t process non-Event messages !');
         }
     }
 }

@@ -19,7 +19,7 @@ class StandardDispatcher implements EventDispatcher
     {
         $listened = 0;
         $category = $event->getCategory();
-
+        
         foreach ($this->subscriptions as $subscription) {
             $hasMatch = $subscription->matches($category);
 
